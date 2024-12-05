@@ -1,0 +1,11 @@
+{
+  "name": "post-trademap",
+  "version": "1.0.0",
+  "description": "Teste técnico",
+  "main": "server.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Clerivaldo Junior",
+  "license": "ISC"
+}
