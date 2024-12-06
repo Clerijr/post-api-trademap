@@ -4,7 +4,7 @@
   "description": "Teste técnico",
   "main": "server.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest --watch"
   },
   "author": "Clerivaldo Junior",
   "license": "ISC",
