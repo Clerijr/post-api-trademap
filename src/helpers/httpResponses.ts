@@ -9,3 +9,17 @@ export function badRequest(error: Error): HttpResponse {
         }
     }
 }
+
+export function ok(payload: any): HttpResponse {
+    return {
+        statusCode: 200,
+        body: payload
+    }
+}
+
+export function created(payload: any): HttpResponse {
+    return {
+        statusCode: 201,
+        body: payload
+    }
+}
