@@ -39,4 +39,17 @@ describe("Posts Controller", () => {
     expect(httpResponse.statusCode).toEqual(400);
     expect(httpResponse.body.message).toEqual("Missing param: body");
   });
+
+  test("Should return 201 if post is created", () => {
+    const sut = new PostController();
+    const httpRequest = {
+      body: {
+        title: "any_title",
+        description: "any_description",
+        body: "any_body",
+      },
+    };
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toEqual(201);
+  });
 });

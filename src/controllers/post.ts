@@ -15,7 +15,7 @@ export class PostController {
 
     }  
     return {
-      statusCode: 200,
+      statusCode: 201,
     }  
   }
 }

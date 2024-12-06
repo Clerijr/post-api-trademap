@@ -4,7 +4,9 @@
   "description": "Teste técnico",
   "main": "server.ts",
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "test:unit": "npm test -- -c jest-unit-config.js",
+    "test:integration": "npm test -- -c jest-integration-config.js"
   },
   "author": "Clerivaldo Junior",
   "license": "ISC",
