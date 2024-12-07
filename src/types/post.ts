@@ -3,6 +3,6 @@ export type Post = {
     title: string
     description: string
     body: string
-    created_at: string
-    updated_at: string
+    created_at?: string
+    updated_at?: string
 }
