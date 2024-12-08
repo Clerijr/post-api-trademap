@@ -40,4 +40,10 @@ describe("Post Usecase", () => {
     await sut.create(post)
     expect(createSpy).toHaveBeenCalledWith(post)
   });
+
+  test("Should throw if postRepository throws", async () => {
+    const { sut, postRepositoryStub } = makeSut();
+    jest.spyOn(postRepositoryStub, "insert").mockRejectedValueOnce(new Error());
+    await expect(sut.create(makePost())).rejects.toThrow();
+  });
 });
