@@ -1,7 +1,7 @@
 import { badRequest, created } from "../helpers/httpResponses";
 import { HttpRequest, HttpResponse } from "../types/http";
-import { Controller } from "./protocols/controller";
-import { PostUsecase } from "./protocols/usecases";
+import { Controller } from "../protocols/controller";
+import { PostUsecase } from "../protocols/usecases";
 export class PostController implements Controller {
   constructor(private readonly postUsecase: PostUsecase) {}
 

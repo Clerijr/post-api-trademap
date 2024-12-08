@@ -1,5 +1,5 @@
 import { PostController } from "./post";
-import { PostUsecase } from "./protocols/usecases";
+import { PostUsecase } from "../protocols/usecases";
 import { makePostRequest } from "../helpers/factories";
 import { Post } from "../types/post";
 
