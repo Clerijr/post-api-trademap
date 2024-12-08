@@ -8,7 +8,7 @@ import { ServerError } from "./errors/server";
 export class PostController implements Controller {
   constructor(private readonly postUsecase: PostUsecase) {}
 
-  async handle(req: HttpRequest): Promise<HttpResponse> {
+  async create(req: HttpRequest): Promise<HttpResponse> {
     const requiredFields = ["title", "description", "body"];
     try {
       for (const field of requiredFields) {

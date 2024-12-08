@@ -33,7 +33,7 @@ describe("Post Controller", () => {
   test("Should throw if postUsecase throws", async () => {
     const { sut, postUsecaseStub } = makeSut();
     jest.spyOn(postUsecaseStub, "create").mockRejectedValueOnce(new Error());
-    await expect(sut.handle(makePostRequest())).rejects.toThrow();
+    await expect(sut.create(makePostRequest())).rejects.toThrow();
   });
 
   test("Should call create method with correct values", async () => {
@@ -46,7 +46,7 @@ describe("Post Controller", () => {
         body: "any_body",
       },
     };
-    await sut.handle(httpRequest);
+    await sut.create(httpRequest);
     expect(createSpy).toHaveBeenCalledWith({
       title: "any_title",
       description: "any_description",

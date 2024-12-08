@@ -40,7 +40,7 @@ describe("Posts Controller", () => {
         body: "any_body",
       },
     };
-    const httpResponse = await sut.handle(httpRequest);
+    const httpResponse = await sut.create(httpRequest);
     expect(httpResponse.statusCode).toEqual(400);
     expect(httpResponse).toEqual(badRequest(new MissingParamError('title')));
   });
@@ -53,7 +53,7 @@ describe("Posts Controller", () => {
         body: "any_body",
       },
     };
-    const httpResponse = await sut.handle(httpRequest);
+    const httpResponse = await sut.create(httpRequest);
     expect(httpResponse.statusCode).toEqual(400);
     expect(httpResponse).toEqual(badRequest(new MissingParamError('description')));
   });
@@ -66,7 +66,7 @@ describe("Posts Controller", () => {
         description: "any_description",
       },
     };
-    const httpResponse = await sut.handle(httpRequest);
+    const httpResponse = await sut.create(httpRequest);
     expect(httpResponse.statusCode).toEqual(400);
     expect(httpResponse).toEqual(badRequest(new MissingParamError('body')));
   });
@@ -74,7 +74,7 @@ describe("Posts Controller", () => {
   test("Should return 201 if post is created", async () => {
     const { sut } = makeSut()
     const httpRequest = makePostRequest();
-    const httpResponse = await sut.handle(httpRequest);
+    const httpResponse = await sut.create(httpRequest);
     expect(httpResponse.statusCode).toEqual(201);
   });
 });
