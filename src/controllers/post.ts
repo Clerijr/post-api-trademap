@@ -3,6 +3,7 @@ import { HttpRequest, HttpResponse } from "../types/http";
 import { Controller } from "../protocols/controller";
 import { PostUsecase } from "../protocols/usecases";
 import { MissingParamError } from "./errors/validation";
+import { ServerError } from "./errors/server";
 
 export class PostController implements Controller {
   constructor(private readonly postUsecase: PostUsecase) {}
@@ -17,7 +18,7 @@ export class PostController implements Controller {
       const payload = await this.postUsecase.create(req.body);
       return created(payload);
     } catch (error: any) {
-      throw new Error(error);
+      throw new ServerError(error);
     }
   }
 }
