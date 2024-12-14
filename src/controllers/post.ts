@@ -1,4 +1,4 @@
-import { badRequest, created } from "../helpers/httpResponses";
+import { badRequest, created, ok } from "../helpers/httpResponses";
 import { HttpRequest, HttpResponse } from "../types/http";
 import { Controller } from "../protocols/controller";
 import { PostRepository } from "../protocols/repository";
@@ -20,5 +20,10 @@ export class PostController implements Controller {
     } catch (error: any) {
       throw new ServerError(error);
     }
+  }
+
+  async getAll(): Promise<HttpResponse> {
+    const payload: Array<Object> = []
+    return ok(payload)
   }
 }

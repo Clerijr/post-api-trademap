@@ -4,7 +4,6 @@ import { Post } from "../types/post";
 import { makePostRequest } from "../helpers/factories";
 import { MissingParamError } from "./errors/validation";
 import { badRequest } from "../helpers/httpResponses";
-import { ObjectId } from "mongodb";
 
 type SutTypes = {
   sut: PostController;
@@ -31,7 +30,7 @@ const makeSut = (): SutTypes => {
   };
 };
 
-describe("Posts Controller", () => {
+describe("Posts Create Controller", () => {
   test("Should return 400 if no title is provided", async () => {
     const { sut } = makeSut();
     const httpRequest = {
@@ -72,11 +71,20 @@ describe("Posts Controller", () => {
     expect(httpResponse.statusCode).toEqual(400);
     expect(httpResponse).toEqual(badRequest(new MissingParamError("body")));
   });
-
   test("Should return 201 if post is created", async () => {
     const { sut } = makeSut();
     const httpRequest = makePostRequest();
     const httpResponse = await sut.create(httpRequest);
     expect(httpResponse.statusCode).toEqual(201);
+  });
+});
+
+describe("Posts Get Controller", () => {
+  test("Should return all Posts", async () => {
+    const { sut } = makeSut();
+    const httpResponse = await sut.getAll();
+    expect(httpResponse.statusCode).toEqual(200);
+    console.log('debug', httpResponse)
+    expect(Array.isArray(httpResponse.body)).toBe(true);
   });
 });
