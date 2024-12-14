@@ -1,19 +1,19 @@
 import { PostController } from "./post";
-import { PostUsecase } from "../protocols/usecases";
+import { PostRepository } from "../protocols/repository";
 import { makePostRequest } from "../helpers/factories";
 import { Post } from "../types/post";
+import { ObjectId } from "mongodb";
 
 type SutTypes = {
   sut: PostController;
-  postUsecaseStub: PostUsecase;
+  postRepositoryStub: PostRepository;
 };
 
 const makeSut = (): SutTypes => {
-  class PostUsecaseStub implements PostUsecase {
-    async create(post: Post): Promise<Post> {
+  class PostRepositoryStub implements PostRepository {
+    async insert(post: Post): Promise<Post> {
       return new Promise((resolve) =>
         resolve({
-          id: "any_id",
           title: "any_title",
           description: "any_description",
           body: "any_body",
@@ -21,24 +21,24 @@ const makeSut = (): SutTypes => {
       );
     }
   }
-  const postUsecaseStub = new PostUsecaseStub();
-  const sut = new PostController(postUsecaseStub);
+  const postRepositoryStub = new PostRepositoryStub();
+  const sut = new PostController(postRepositoryStub);
   return {
     sut,
-    postUsecaseStub,
+    postRepositoryStub,
   };
 };
 
 describe("Post Controller", () => {
-  test("Should throw if postUsecase throws", async () => {
-    const { sut, postUsecaseStub } = makeSut();
-    jest.spyOn(postUsecaseStub, "create").mockRejectedValueOnce(new Error());
+  test("Should throw if postRepository throws", async () => {
+    const { sut, postRepositoryStub } = makeSut();
+    jest.spyOn(postRepositoryStub, "insert").mockRejectedValueOnce(new Error());
     await expect(sut.create(makePostRequest())).rejects.toThrow();
   });
 
   test("Should call create method with correct values", async () => {
-    const { sut, postUsecaseStub } = makeSut();
-    const createSpy = jest.spyOn(postUsecaseStub, "create");
+    const { sut, postRepositoryStub } = makeSut();
+    const createSpy = jest.spyOn(postRepositoryStub, "insert");
     const httpRequest = {
       body: {
         title: "any_title",

@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb"
+
 export type Post = {
-    id?: string
+    _id?: ObjectId
     title: string
     description: string
     body: string
