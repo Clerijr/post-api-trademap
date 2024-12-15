@@ -24,12 +24,13 @@ describe("Post Repository", () => {
     expect(payload.title).toBeTruthy()
   });
 
-  test("Should return an array with one Post", async () => {
+  test("Should return an array with two Post objects", async () => {
     const sut = new PostMongoRepository();
+    await sut.insert(makePost());
     await sut.insert(makePost());
     const payload = await sut.getAll()
     expect(Array.isArray(payload)).toBe(true)
-    expect(payload.length).toEqual(1)
+    expect(payload.length).toEqual(2)
     expect(payload[0]._id).toBeTruthy()
     expect(payload[0].title).toBeTruthy()
   });
