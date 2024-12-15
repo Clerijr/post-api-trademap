@@ -4,5 +4,6 @@ export interface PostRepository {
   insert(post: Post): Promise<Object>;
   getAll(): Promise<Array<Post>>;
   getOne(id: string): Promise<Post | null>;
-  deleteOne(id: string): Promise<null>
+  deleteOneById(id: string): Promise<void>
+  updateOneById(id: string, post: Post): Promise<Post | null>
 }

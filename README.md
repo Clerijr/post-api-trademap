@@ -8,7 +8,7 @@ Desafio Backend para a empresa [TradeMap](https://www.linkedin.com/company/trade
 - [] Editar um Post
 - [] Deletar um Post
 - [] Listar os Posts de maneira paginada, permitindo filtro por data.
-- [X] Obter informações de um Post por ID.
+- [] Obter informações de um Post por ID.
 
 A entidade `Post`, deve ter os seguintes campos:
 

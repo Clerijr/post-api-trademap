@@ -62,7 +62,22 @@ describe("Post Repository", () => {
     const sut = new PostMongoRepository();
     const postDocument = await sut.insert(makePost());
     const postId: string = postDocument._id!.toString()
-    const result = await sut.deleteOne(postId)
+    const result = await sut.deleteOneById(postId)
     expect(result).toBeFalsy()
+  });
+
+  test("Should return updated Post when correct data is provided", async () => {
+    const sut = new PostMongoRepository();
+    const postDocument = await sut.insert(makePost());
+    const postId: string = postDocument._id!.toString()
+    const result = await sut.updateOneById(postId, {
+      title: 'updated_title',
+      description: 'updated_description',
+      body: 'updated_body'
+    })
+    expect(typeof result).toBe('object')
+    expect(result!.title).toBe('updated_title')
+    expect(result!.description).toBe('updated_description')
+    expect(result!.body).toBe('updated_body')
   });
 });
