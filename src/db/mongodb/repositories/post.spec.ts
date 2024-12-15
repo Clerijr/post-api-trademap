@@ -23,6 +23,10 @@ describe("Post Repository", () => {
     expect(typeof payload).toBe('object')
     expect(payload._id).toBeTruthy()
     expect(payload.title).toBeTruthy()
+    expect(payload.description).toBeTruthy()
+    expect(payload.body).toBeTruthy()
+    expect(payload.created_at).toBeTruthy()
+    expect(payload.updated_at).toBeTruthy()
   });
 
   test("Should return an array with two Post objects", async () => {
