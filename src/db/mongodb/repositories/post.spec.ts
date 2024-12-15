@@ -1,6 +1,7 @@
 import { connectDB, disconnectDB, getCollection } from "../helper";
 import { PostMongoRepository } from "./post";
 import { makePost } from "../../../helpers/factories";
+import { ObjectId } from "mongodb";
 
 describe("Post Repository", () => {
   beforeAll(async () => {
@@ -41,5 +42,15 @@ describe("Post Repository", () => {
     const postId: string = payload._id!.toString()
     const post = await sut.getOne(postId)
     expect(post).toBeTruthy()
+    expect(typeof post).toBe('object')
+    expect(post!._id).toBeTruthy()
+  });
+
+  test("Should return null if no Post is located", async () => {
+    const sut = new PostMongoRepository();
+    await sut.insert(makePost());
+    const postId: string = new ObjectId().toString()
+    const post = await sut.getOne(postId)
+    expect(post).toBeFalsy()
   });
 });
