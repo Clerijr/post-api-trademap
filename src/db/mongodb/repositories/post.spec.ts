@@ -42,8 +42,8 @@ describe("Post Repository", () => {
 
   test("Should return an Post with same provided Id", async () => {
     const sut = new PostMongoRepository();
-    const payload = await sut.insert(makePost());
-    const postId: string = payload._id!.toString()
+    const postDocument = await sut.insert(makePost());
+    const postId: string = postDocument._id!.toString()
     const post = await sut.getOne(postId)
     expect(post).toBeTruthy()
     expect(typeof post).toBe('object')
@@ -56,5 +56,13 @@ describe("Post Repository", () => {
     const postId: string = new ObjectId().toString()
     const post = await sut.getOne(postId)
     expect(post).toBeFalsy()
+  });
+
+  test("Should return null if Post is deleted successfully", async () => {
+    const sut = new PostMongoRepository();
+    const postDocument = await sut.insert(makePost());
+    const postId: string = postDocument._id!.toString()
+    const result = await sut.deleteOne(postId)
+    expect(result).toBeFalsy()
   });
 });

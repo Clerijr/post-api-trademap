@@ -31,6 +31,12 @@ export const makePostRepositoryStub = (): PostRepository => {
         resolve(makePost())
       );
     }
+
+    async deleteOne(id: string): Promise<null> {
+      return new Promise((resolve) =>
+        resolve(null)
+      );
+      }
   }
 
   return new PostRepositoryStub()

@@ -6,8 +6,8 @@ import { ObjectId } from "mongodb";
 export class PostMongoRepository implements PostRepository {
   async insert(post: Post): Promise<Post> {
     const collection = getCollection("posts");
-    post['created_at'] = new Date()
-    post['updated_at'] = new Date()
+    post["created_at"] = new Date();
+    post["updated_at"] = new Date();
     const doc = await collection.insertOne(post);
     const result = await collection.findOne<Post>({ _id: doc.insertedId });
     if (result === null) throw new Error("Error fetching new post");
@@ -26,5 +26,13 @@ export class PostMongoRepository implements PostRepository {
       _id: new ObjectId(id),
     });
     return payload;
+  }
+
+  async deleteOne(id: string): Promise<null> {
+    const collection = getCollection("posts");
+    await collection.deleteOne({
+      _id: new ObjectId(id),
+    });
+    return null;
   }
 }
