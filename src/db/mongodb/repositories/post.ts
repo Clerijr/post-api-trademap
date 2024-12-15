@@ -11,4 +11,9 @@ export class PostMongoRepository implements PostRepository {
     if(result === null) throw new Error('Error fetching new post')
     return result;
   }
+
+  async getAll(): Promise<Array<Post>> {
+    const payload: Array<Post> = []
+    return payload
+  }
 }
