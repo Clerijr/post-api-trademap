@@ -23,7 +23,6 @@ export class PostController implements Controller {
   }
 
   async getAll(): Promise<HttpResponse> {
-    const payload: Array<Object> = []
-    return ok(payload)
+    return ok(this.postRepository.getAll())
   }
 }

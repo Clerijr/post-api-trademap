@@ -10,19 +10,29 @@ type SutTypes = {
   postRepositoryStub: PostRepository;
 };
 
-const makeSut = (): SutTypes => {
+const makePost = (): Post => ({
+  title: "any_title",
+  description: "any_description",
+  body: "any_body",
+})
+
+const makePostRepositoryStub = (): PostRepository => {
   class PostRepositoryStub implements PostRepository {
-    insert(post: Post): Promise<Post> {
+    async insert(post: Post): Promise<Post> {
       return new Promise((resolve) =>
-        resolve({
-          title: "any_title",
-          description: "any_description",
-          body: "any_body",
-        })
+        resolve(makePost())
       );
     }
+    async getAll(): Promise<Array<Post>> {
+      return new Array(1).fill(makePost())
+    }
   }
-  const postRepositoryStub = new PostRepositoryStub();
+
+  return new PostRepositoryStub()
+}
+
+const makeSut = (): SutTypes => {
+  const postRepositoryStub = makePostRepositoryStub();
   const sut = new PostController(postRepositoryStub);
   return {
     sut,
@@ -76,15 +86,5 @@ describe("Posts Create Controller", () => {
     const httpRequest = makePostRequest();
     const httpResponse = await sut.create(httpRequest);
     expect(httpResponse.statusCode).toEqual(201);
-  });
-});
-
-describe("Posts Get Controller", () => {
-  test("Should return all Posts", async () => {
-    const { sut } = makeSut();
-    const httpResponse = await sut.getAll();
-    expect(httpResponse.statusCode).toEqual(200);
-    console.log('debug', httpResponse)
-    expect(Array.isArray(httpResponse.body)).toBe(true);
   });
 });

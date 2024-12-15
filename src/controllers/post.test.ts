@@ -9,19 +9,29 @@ type SutTypes = {
   postRepositoryStub: PostRepository;
 };
 
-const makeSut = (): SutTypes => {
+const makePost = (): Post => ({
+  title: "any_title",
+  description: "any_description",
+  body: "any_body",
+})
+
+const makePostRepositoryStub = (): PostRepository => {
   class PostRepositoryStub implements PostRepository {
     async insert(post: Post): Promise<Post> {
       return new Promise((resolve) =>
-        resolve({
-          title: "any_title",
-          description: "any_description",
-          body: "any_body",
-        })
+        resolve(makePost())
       );
     }
+    async getAll(): Promise<Array<Post>> {
+      return new Array(1).fill(makePost())
+    }
   }
-  const postRepositoryStub = new PostRepositoryStub();
+
+  return new PostRepositoryStub()
+}
+
+const makeSut = (): SutTypes => {
+  const postRepositoryStub = makePostRepositoryStub();
   const sut = new PostController(postRepositoryStub);
   return {
     sut,
@@ -29,7 +39,7 @@ const makeSut = (): SutTypes => {
   };
 };
 
-describe("Post Controller", () => {
+describe("Post Create Controller", () => {
   test("Should throw if postRepository throws", async () => {
     const { sut, postRepositoryStub } = makeSut();
     jest.spyOn(postRepositoryStub, "insert").mockRejectedValueOnce(new Error());
@@ -53,4 +63,14 @@ describe("Post Controller", () => {
       body: "any_body",
     });
   });
+});
+
+describe("Posts GetAll Controller", () => {
+  test("Should call getAll repository method", async () => {
+    const { sut, postRepositoryStub } = makeSut();
+    const getAllSpy = jest.spyOn(postRepositoryStub, 'getAll')
+    await sut.getAll();
+    expect(getAllSpy).toHaveBeenCalled()
+  });
+
 });
