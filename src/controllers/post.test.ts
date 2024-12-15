@@ -1,19 +1,12 @@
 import { PostController } from "./post";
 import { PostRepository } from "../protocols/repository";
-import { makePostRequest } from "../helpers/factories";
+import { makePostRequest, makePost } from "../helpers";
 import { Post } from "../types/post";
-import { ObjectId } from "mongodb";
 
 type SutTypes = {
   sut: PostController;
   postRepositoryStub: PostRepository;
 };
-
-const makePost = (): Post => ({
-  title: "any_title",
-  description: "any_description",
-  body: "any_body",
-})
 
 const makePostRepositoryStub = (): PostRepository => {
   class PostRepositoryStub implements PostRepository {

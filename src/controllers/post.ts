@@ -1,7 +1,6 @@
 import { badRequest, created, ok } from "../helpers/httpResponses";
 import { HttpRequest, HttpResponse } from "../types/http";
-import { Controller } from "../protocols/controller";
-import { PostRepository } from "../protocols/repository";
+import { Controller, PostRepository } from "../protocols";
 import { MissingParamError } from "./errors/validation";
 import { ServerError } from "./errors/server";
 

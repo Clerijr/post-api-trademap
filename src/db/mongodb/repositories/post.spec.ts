@@ -1,5 +1,6 @@
 import { connectDB, disconnectDB, getCollection } from "../helper";
 import { PostMongoRepository } from "./post";
+import { makePost } from "../../../helpers/factories";
 
 describe("Post Repository", () => {
   beforeAll(async () => {

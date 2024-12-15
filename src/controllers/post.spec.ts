@@ -1,20 +1,14 @@
 import { PostController } from "./post";
-import { PostRepository } from "../protocols/repository";
+import { Controller, PostRepository } from "../protocols";
 import { Post } from "../types/post";
-import { makePostRequest } from "../helpers/factories";
+import { makePostRequest, makePost } from "../helpers";
 import { MissingParamError } from "./errors/validation";
 import { badRequest } from "../helpers/httpResponses";
 
 type SutTypes = {
-  sut: PostController;
+  sut: Controller;
   postRepositoryStub: PostRepository;
 };
-
-const makePost = (): Post => ({
-  title: "any_title",
-  description: "any_description",
-  body: "any_body",
-})
 
 const makePostRepositoryStub = (): PostRepository => {
   class PostRepositoryStub implements PostRepository {
