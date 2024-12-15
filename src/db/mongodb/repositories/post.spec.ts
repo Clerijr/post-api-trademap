@@ -34,4 +34,12 @@ describe("Post Repository", () => {
     expect(payload[0]._id).toBeTruthy()
     expect(payload[0].title).toBeTruthy()
   });
+
+  test("Should return an Post with same provided Id", async () => {
+    const sut = new PostMongoRepository();
+    const payload = await sut.insert(makePost());
+    const postId: string = payload._id!.toString()
+    const post = await sut.getOne(postId)
+    expect(post).toBeTruthy()
+  });
 });
