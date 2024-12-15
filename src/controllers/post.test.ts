@@ -1,27 +1,11 @@
 import { PostController } from "./post";
 import { PostRepository } from "../protocols/repository";
-import { makePostRequest, makePost } from "../helpers";
-import { Post } from "../types/post";
+import { makePostRequest, makePostRepositoryStub } from "../helpers";
 
 type SutTypes = {
   sut: PostController;
   postRepositoryStub: PostRepository;
 };
-
-const makePostRepositoryStub = (): PostRepository => {
-  class PostRepositoryStub implements PostRepository {
-    async insert(post: Post): Promise<Post> {
-      return new Promise((resolve) =>
-        resolve(makePost())
-      );
-    }
-    async getAll(): Promise<Array<Post>> {
-      return new Array(1).fill(makePost())
-    }
-  }
-
-  return new PostRepositoryStub()
-}
 
 const makeSut = (): SutTypes => {
   const postRepositoryStub = makePostRepositoryStub();
