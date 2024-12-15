@@ -1,8 +1,8 @@
 import { PostController } from "./post";
-import { Controller, PostRepository } from "../protocols";
 import { Post } from "../types/post";
-import { makePostRequest, makePost } from "../helpers";
+import { Controller, PostRepository } from "../protocols";
 import { MissingParamError } from "./errors/validation";
+import { makePostRequest, makePost } from "../helpers";
 import { badRequest } from "../helpers/httpResponses";
 
 type SutTypes = {

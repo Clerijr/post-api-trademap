@@ -18,13 +18,19 @@ describe("Post Repository", () => {
   
   test("Should return a post on success", async () => {
     const sut = new PostMongoRepository();
-    const payload = await sut.insert({
-      title: "any_title",
-      description: "any_description",
-      body: "any_body",
-    });
+    const payload = await sut.insert(makePost());
     expect(typeof payload).toBe('object')
     expect(payload._id).toBeTruthy()
     expect(payload.title).toBeTruthy()
+  });
+
+  test("Should return an array with one Post", async () => {
+    const sut = new PostMongoRepository();
+    await sut.insert(makePost());
+    const payload = await sut.getAll()
+    expect(Array.isArray(payload)).toBe(true)
+    expect(payload.length).toEqual(1)
+    expect(payload[0]._id).toBeTruthy()
+    expect(payload[0].title).toBeTruthy()
   });
 });
