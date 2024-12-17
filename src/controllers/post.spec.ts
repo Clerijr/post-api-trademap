@@ -32,21 +32,6 @@ describe("Posts Create Controller", () => {
     expect(httpResponse).toEqual(badRequest(new MissingParamError("title")));
   });
 
-  test("Should return 400 if no description is provided", async () => {
-    const { sut } = makeSut();
-    const httpRequest = {
-      body: {
-        title: "any_title",
-        body: "any_body",
-      },
-    };
-    const httpResponse = await sut.create(httpRequest);
-    expect(httpResponse.statusCode).toEqual(400);
-    expect(httpResponse).toEqual(
-      badRequest(new MissingParamError("description"))
-    );
-  });
-
   test("Should return 400 if no body is provided", async () => {
     const { sut } = makeSut();
     const httpRequest = {

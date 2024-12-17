@@ -8,7 +8,7 @@ export class PostController implements Controller {
   constructor(private readonly postRepository: PostRepository) {}
 
   async create(req: HttpRequest): Promise<HttpResponse> {
-    const requiredFields = ["title", "description", "body"];
+    const requiredFields = ["title", "body"];
     try {
       for (const field of requiredFields) {
         if (!req.body[field]) return badRequest(new MissingParamError(field));
@@ -24,4 +24,11 @@ export class PostController implements Controller {
   async getAll(): Promise<HttpResponse> {
     return ok(this.postRepository.getAll())
   }
+
+  /* async update(req: HttpRequest): Promise<HttpResponse> {
+
+
+    const payload = await this.postRepository.updateOneById(id, post)
+    return updated(payload)
+  } */
 }
