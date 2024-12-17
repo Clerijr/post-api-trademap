@@ -42,7 +42,7 @@ describe("Post Create Controller", () => {
   });
 });
 
-describe("Posts GetAll Controller", () => {
+describe("Posts Read Controller", () => {
   test("Should call getAll repository method", async () => {
     const { sut, postRepositoryStub } = makeSut();
     const getAllSpy = jest.spyOn(postRepositoryStub, 'getAll')
@@ -51,3 +51,13 @@ describe("Posts GetAll Controller", () => {
   });
 
 });
+
+/* describe("Posts Update Controller", () => {
+  test("Should call updateOneById repository method", async () => {
+    const { sut, postRepositoryStub } = makeSut();
+    const updateOneByIdSpy = jest.spyOn(postRepositoryStub, 'getAll')
+    await sut.update();
+    expect(updateOneByIdSpy).toHaveBeenCalled()
+  });
+
+}); */

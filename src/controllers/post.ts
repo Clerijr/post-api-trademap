@@ -22,13 +22,18 @@ export class PostController implements Controller {
   }
 
   async getAll(): Promise<HttpResponse> {
-    return ok(this.postRepository.getAll())
+    return ok(this.postRepository.getAll());
   }
 
-  /* async update(req: HttpRequest): Promise<HttpResponse> {
+  async update(req: HttpRequest): Promise<HttpResponse> {
+    try {
+      const postId = req.params.post_id;
+      const post = req.body;
 
-
-    const payload = await this.postRepository.updateOneById(id, post)
-    return updated(payload)
-  } */
+      const payload = await this.postRepository.updateOneById(postId, post);
+      return ok(payload);
+    } catch (error: any) {
+      throw new ServerError(error);
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import { HttpRequest, Post } from "../types";
 import { PostRepository } from "../protocols";
+import { ObjectId } from "mongodb";
 
 export const makePostRequest = (): HttpRequest => ({
   body: {
@@ -13,6 +14,15 @@ export const makePost = (): Post => ({
   title: "any_title",
   description: "any_description",
   body: "any_body",
+});
+
+export const makeMongoPostDoc = (objId: ObjectId = new ObjectId()): Post => ({
+  _id: objId,
+  title: "any_title",
+  description: "any_description",
+  body: "any_body",
+  created_at: "2024-12-05T18:38:05.775401Z",
+  updated_at: "2024-12-05T18:45:05.219877287Z",
 });
 
 export const makePostRepositoryStub = (): PostRepository => {
