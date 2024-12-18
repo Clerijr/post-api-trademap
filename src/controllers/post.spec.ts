@@ -2,8 +2,9 @@ import { PostController } from "./post";
 import { makePostRequest, makePostRepositoryStub, makeMongoPostDoc } from "../helpers";
 import { Controller, PostRepository } from "../protocols";
 import { MissingParamError } from "./errors/validation";
-import { badRequest } from "../helpers/httpResponses";
+import { badRequest, notFound } from "../helpers/httpResponses";
 import { ObjectId } from "mongodb";
+import { PostNotFoundError } from "./errors/server";
 
 type SutTypes = {
   sut: Controller;
@@ -78,4 +79,21 @@ describe("Posts Update Controller", () => {
     expect(httpResponse.statusCode).toEqual(200);
     expect(httpResponse.body).toEqual(updatedPost);
   });
+
+  test('Should return 404 if no Post is found', async () => {
+    const { sut, postRepositoryStub } = makeSut();
+    jest.spyOn(postRepositoryStub, "updateOneById").mockResolvedValueOnce(null);
+    const httpRequest = {
+      params: {
+        post_id: 'unexistent_post_id',
+      },
+      body: {
+        title: "updated_title",
+        body: "updated_body",
+      },
+    };
+    const httpResponse = await sut.update(httpRequest);
+    expect(httpResponse.statusCode).toEqual(404);
+    expect(httpResponse).toEqual(notFound(new PostNotFoundError()));
+  })
 });

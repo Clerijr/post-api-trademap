@@ -3,3 +3,9 @@ export class ServerError extends Error {
         super(`Internal Server Error: ${error}`)
     }
 }
+
+export class PostNotFoundError extends Error {
+    constructor() {
+        super(`Post not found`)
+    }
+}

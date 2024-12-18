@@ -10,6 +10,16 @@ export function badRequest(error: Error): HttpResponse {
     }
 }
 
+export function notFound(error: Error): HttpResponse {
+    return {
+        statusCode: 404,
+        body: {
+            error: error.name,
+            message: error.message
+        }
+    }
+}
+
 export function ok(payload: any): HttpResponse {
     return {
         statusCode: 200,

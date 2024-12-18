@@ -1,8 +1,8 @@
-import { badRequest, created, ok } from "../helpers/httpResponses";
+import { badRequest, created, notFound, ok } from "../helpers/httpResponses";
 import { HttpRequest, HttpResponse } from "../types/http";
 import { Controller, PostRepository } from "../protocols";
 import { MissingParamError } from "./errors/validation";
-import { ServerError } from "./errors/server";
+import { PostNotFoundError, ServerError } from "./errors/server";
 
 export class PostController implements Controller {
   constructor(private readonly postRepository: PostRepository) {}
@@ -31,6 +31,7 @@ export class PostController implements Controller {
       const post = req.body;
 
       const payload = await this.postRepository.updateOneById(postId, post);
+      if(!payload) return notFound(new PostNotFoundError())
       return ok(payload);
     } catch (error: any) {
       throw new ServerError(error);
