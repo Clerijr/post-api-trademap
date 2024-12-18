@@ -27,6 +27,12 @@ export function ok(payload: any): HttpResponse {
     }
 }
 
+export function noContent(): HttpResponse {
+    return {
+        statusCode: 204
+    }
+}
+
 export function created(payload: any): HttpResponse {
     return {
         statusCode: 201,

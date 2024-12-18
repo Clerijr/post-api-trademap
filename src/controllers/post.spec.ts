@@ -97,3 +97,19 @@ describe("Posts Update Controller", () => {
     expect(httpResponse).toEqual(notFound(new PostNotFoundError()));
   })
 });
+
+describe("Posts Delete Controller", () => {
+  test("Should return 204 if post is deleted", async () => {
+    const fakePost = makeMongoPostDoc()
+    const { sut, postRepositoryStub } = makeSut();
+    jest.spyOn(postRepositoryStub, "deleteOneById").mockResolvedValueOnce();
+    const httpRequest = {
+      params: {
+        post_id: fakePost._id,
+      }
+    };
+    const httpResponse = await sut.delete(httpRequest);
+    expect(httpResponse.statusCode).toEqual(204);
+  });
+});
+
