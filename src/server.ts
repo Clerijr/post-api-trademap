@@ -13,6 +13,16 @@ router.get("/post", async (req: Request, res: Response): Promise<void> => {
     res.status(response.statusCode).json(response.body)
 })
 
+router.put("/post/:post_id", async (req: Request, res: Response): Promise<void> => {
+    const response = await postController.update(req)
+    res.status(response.statusCode).json(response.body)
+})
+
+router.delete("/post/:post_id", async (req: Request, res: Response): Promise<void> => {
+    const response = await postController.delete(req)
+    res.status(response.statusCode).json(response.body)
+})
+
 router.post("/post", async (req: Request, res: Response): Promise<void> => {
     const response = await postController.create(req)
     res.status(response.statusCode).json(response.body)

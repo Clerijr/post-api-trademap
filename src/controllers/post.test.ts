@@ -51,13 +51,3 @@ describe("Posts Read Controller", () => {
   });
 
 });
-
-/* describe("Posts Update Controller", () => {
-  test("Should call updateOneById repository method", async () => {
-    const { sut, postRepositoryStub } = makeSut();
-    const updateOneByIdSpy = jest.spyOn(postRepositoryStub, 'getAll')
-    await sut.update();
-    expect(updateOneByIdSpy).toHaveBeenCalled()
-  });
-
-}); */

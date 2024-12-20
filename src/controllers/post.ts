@@ -22,7 +22,8 @@ export class PostController implements Controller {
   }
 
   async getAll(): Promise<HttpResponse> {
-    return ok(this.postRepository.getAll());
+    const payload = await this.postRepository.getAll();
+    return ok(payload);
   }
 
   async update(req: HttpRequest): Promise<HttpResponse> {
