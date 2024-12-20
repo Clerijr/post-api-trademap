@@ -44,7 +44,7 @@ describe("Post Repository", () => {
     const sut = new PostMongoRepository();
     const postDocument = await sut.insert(makePost());
     const postId: string = postDocument._id!.toString()
-    const post = await sut.getOne(postId)
+    const post = await sut.getOneById(postId)
     expect(post).toBeTruthy()
     expect(typeof post).toBe('object')
     expect(post!._id).toBeTruthy()
@@ -54,7 +54,7 @@ describe("Post Repository", () => {
     const sut = new PostMongoRepository();
     await sut.insert(makePost());
     const postId: string = new ObjectId().toString()
-    const post = await sut.getOne(postId)
+    const post = await sut.getOneById(postId)
     expect(post).toBeFalsy()
   });
 

@@ -26,6 +26,13 @@ export class PostController implements Controller {
     return ok(payload);
   }
 
+  async get(req: HttpRequest): Promise<HttpResponse> {
+    const postId = req.params.post_id;
+    const payload = await this.postRepository.getOneById(postId);
+    if(!payload) return notFound(new PostNotFoundError())
+    return ok(payload);
+  }
+
   async update(req: HttpRequest): Promise<HttpResponse> {
     try {
       const postId = req.params.post_id;

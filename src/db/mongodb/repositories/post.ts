@@ -21,7 +21,7 @@ export class PostMongoRepository implements PostRepository {
     return payload;
   }
 
-  async getOne(id: string): Promise<Post | null> {
+  async getOneById(id: string): Promise<Post | null> {
     const collection = getCollection("posts");
     const payload: Post | null = await collection.findOne<Post>({
       _id: new ObjectId(id),

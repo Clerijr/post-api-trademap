@@ -34,7 +34,7 @@ export const makePostRepositoryStub = (): PostRepository => {
       return new Array(1).fill(makePost());
     }
 
-    async getOne(id: string): Promise<Post | null> {
+    async getOneById(id: string): Promise<Post | null> {
       return new Promise((resolve) => resolve(makePost()));
     }
 
