@@ -53,6 +53,14 @@ describe("Posts Create Controller", () => {
   });
 });
 
+describe("Posts Get Controller", () => {
+  test("Should return 200 if success", async () => {
+    const { sut } = makeSut();
+    const httpResponse = await sut.getAll();
+    expect(httpResponse.statusCode).toEqual(200);
+  });
+});
+
 describe("Posts Update Controller", () => {
   test("Should return 200 if post is updated", async () => {
     const fakePost = makeMongoPostDoc()
