@@ -1,39 +1,14 @@
-import express, { Application, Router, Request, Response } from "express";
 import { PostController } from "./controllers/post";
 import { PostMongoRepository } from "./db/mongodb/repositories/post";
+import { MongoHelper } from "./db/mongodb/helper";
+import { initApp } from "./config/app";
 
-const app: Application = express() 
-const router: Router = Router() 
+const initServer = async () => {
+  const db = await MongoHelper.connect();
+  const postRepository = new PostMongoRepository(db);
+  const postController = new PostController(postRepository);
 
-const postRepository = new PostMongoRepository()
-const postController = new PostController(postRepository)
+  initApp(postController);
+};
 
-router.get("/post", async (req: Request, res: Response): Promise<void> => {
-    const response = await postController.getAll()
-    res.status(response.statusCode).json(response.body)
-})
-
-router.get("/post/:post_id", async (req: Request, res: Response): Promise<void> => {
-    const response = await postController.get(req)
-    res.status(response.statusCode).json(response.body)
-})
-
-router.put("/post/:post_id", async (req: Request, res: Response): Promise<void> => {
-    const response = await postController.update(req)
-    res.status(response.statusCode).json(response.body)
-})
-
-router.delete("/post/:post_id", async (req: Request, res: Response): Promise<void> => {
-    const response = await postController.delete(req)
-    res.status(response.statusCode).json(response.body)
-})
-
-router.post("/post", async (req: Request, res: Response): Promise<void> => {
-    const response = await postController.create(req)
-    res.status(response.statusCode).json(response.body)
-})
-
-
-app.use(express.json())
-app.use(router)
-app.listen(8080, () => "App running on Port 8080")
+initServer();
