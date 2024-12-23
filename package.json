@@ -7,7 +7,8 @@
     "test": "jest --watch",
     "test:unit": "npm test -- -c jest-unit-config.js",
     "test:integration": "npm test -- -c jest-integration-config.js",
-    "build": "rimraf ./dist && tsc"
+    "build": "rimraf ./dist && tsc",
+    "start": "npm run build && node dist/server.js"
   },
   "author": "Clerivaldo Junior",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongodb": "^6.11.0"
   }
