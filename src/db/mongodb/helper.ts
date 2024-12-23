@@ -1,26 +1,29 @@
-import { MongoClient, Collection } from "mongodb";
+import { MongoClient, Collection, Db } from "mongodb";
 
-const uri = process.env.MONGO_URL || "mongodb://localhost:27017"; 
-const client = new MongoClient(uri);
+export const MongoHelper = {
+  client: null as unknown as MongoClient,
+  uri: '',
 
-export const connectDB = async () => {
-  try {
-    await client.connect();
-    console.log('Connected to MongoDB');
-    
-    return client.db('mongo-trademap'); 
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-    process.exit(1);
+  async connect(uri: string = "mongodb://localhost:27017/"): Promise<Db> {
+    this.uri = uri
+
+    try {
+      this.client = await MongoClient.connect(uri);
+      console.log('Connected to MongoDB ', uri);
+      
+      return this.client.db("post-trademap")
+    } catch (error) {
+      console.error('Error connecting to MongoDB:', error);
+      process.exit(1);
+    }
+  },
+
+  async disconnect(): Promise<void> {
+    await this.client.close()
+  },
+  
+  async getCollection(name: string): Promise<Collection> {
+    return this.client.db().collection(name)
   }
-};
-
-export const disconnectDB = async () => {
-  await client.close()
 }
 
-export const getCollection = (name: string): Collection => {
-  return client.db().collection(name)
-}
-
-export const getDB = () => client.db('mongo-trademap');

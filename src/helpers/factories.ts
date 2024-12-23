@@ -1,5 +1,5 @@
 import { HttpRequest, Post } from "../types";
-import { PostRepository } from "../protocols";
+import { Repository } from "../protocols";
 import { ObjectId } from "mongodb";
 
 export const makePostRequest = (): HttpRequest => ({
@@ -25,8 +25,9 @@ export const makeMongoPostDoc = (objId: ObjectId = new ObjectId()): Post => ({
   updated_at: "2024-12-05T18:45:05.219877287Z",
 });
 
-export const makePostRepositoryStub = (): PostRepository => {
-  class PostRepositoryStub implements PostRepository {
+export const makePostRepositoryStub = (): Repository => {
+  class PostRepositoryStub implements Repository {
+
     async insert(post: Post): Promise<Post> {
       return new Promise((resolve) => resolve(makePost()));
     }

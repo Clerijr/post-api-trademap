@@ -1,6 +1,6 @@
 import { PostController } from "./post";
 import { makePostRequest, makePostRepositoryStub, makeMongoPostDoc } from "../helpers";
-import { Controller, PostRepository } from "../protocols";
+import { Controller, Repository } from "../protocols";
 import { MissingParamError } from "./errors/validation";
 import { badRequest, notFound } from "../helpers/httpResponses";
 import { ObjectId } from "mongodb";
@@ -8,7 +8,7 @@ import { PostNotFoundError } from "./errors/server";
 
 type SutTypes = {
   sut: Controller;
-  postRepositoryStub: PostRepository;
+  postRepositoryStub: Repository;
 };
 
 const makeSut = (): SutTypes => {

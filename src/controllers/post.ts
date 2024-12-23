@@ -1,11 +1,17 @@
-import { badRequest, created, noContent, notFound, ok } from "../helpers/httpResponses";
+import {
+  badRequest,
+  created,
+  noContent,
+  notFound,
+  ok,
+} from "../helpers/httpResponses";
 import { HttpRequest, HttpResponse } from "../types/http";
-import { Controller, PostRepository } from "../protocols";
+import { Controller, Repository } from "../protocols";
 import { MissingParamError } from "./errors/validation";
 import { PostNotFoundError, ServerError } from "./errors/server";
 
 export class PostController implements Controller {
-  constructor(private readonly postRepository: PostRepository) {}
+  constructor(private readonly postRepository: Repository) {}
 
   async create(req: HttpRequest): Promise<HttpResponse> {
     const requiredFields = ["title", "body"];
@@ -29,7 +35,7 @@ export class PostController implements Controller {
   async get(req: HttpRequest): Promise<HttpResponse> {
     const postId = req.params.post_id;
     const payload = await this.postRepository.getOneById(postId);
-    if(!payload) return notFound(new PostNotFoundError())
+    if (!payload) return notFound(new PostNotFoundError());
     return ok(payload);
   }
 
@@ -39,7 +45,7 @@ export class PostController implements Controller {
       const post = req.body;
 
       const payload = await this.postRepository.updateOneById(postId, post);
-      if(!payload) return notFound(new PostNotFoundError())
+      if (!payload) return notFound(new PostNotFoundError());
       return ok(payload);
     } catch (error: any) {
       throw new ServerError(error);

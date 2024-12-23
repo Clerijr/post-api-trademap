@@ -1,25 +1,28 @@
-import { connectDB, disconnectDB, getCollection } from "../helper";
+import { MongoHelper } from "../helper";
 import { PostMongoRepository } from "./post";
 import { makePost } from "../../../helpers/factories";
-import { ObjectId } from "mongodb";
+import { Db, ObjectId } from "mongodb";
+
 
 describe("Post Repository", () => {
+  let db: Db
+
   beforeAll(async () => {
-    await connectDB()
+    db = await MongoHelper.connect()
   })
 
   afterAll(async () => {
-    await disconnectDB()
+    await MongoHelper.disconnect()
   })
 
   beforeEach(async () => {
-    const postCollection = getCollection('posts')
+    const postCollection = await MongoHelper.getCollection('posts')
     await postCollection.deleteMany({})
   })
   
   test("Should return a post on success", async () => {
-    const sut = new PostMongoRepository();
-    const payload = await sut.insert(makePost());
+    const sut = new PostMongoRepository(db) 
+    const payload = await sut.insert(makePost())
     expect(typeof payload).toBe('object')
     expect(payload._id).toBeTruthy()
     expect(payload.title).toBeTruthy()
@@ -29,19 +32,8 @@ describe("Post Repository", () => {
     expect(payload.updated_at).toBeTruthy()
   });
 
-  test("Should return an array with two Post objects", async () => {
-    const sut = new PostMongoRepository();
-    await sut.insert(makePost());
-    await sut.insert(makePost());
-    const payload = await sut.getAll()
-    expect(Array.isArray(payload)).toBe(true)
-    expect(payload.length).toEqual(2)
-    expect(payload[0]._id).toBeTruthy()
-    expect(payload[0].title).toBeTruthy()
-  });
-
   test("Should return an Post with same provided Id", async () => {
-    const sut = new PostMongoRepository();
+    const sut = new PostMongoRepository(db);
     const postDocument = await sut.insert(makePost());
     const postId: string = postDocument._id!.toString()
     const post = await sut.getOneById(postId)
@@ -51,7 +43,7 @@ describe("Post Repository", () => {
   });
 
   test("Should return null if no Post is located", async () => {
-    const sut = new PostMongoRepository();
+    const sut = new PostMongoRepository(db);
     await sut.insert(makePost());
     const postId: string = new ObjectId().toString()
     const post = await sut.getOneById(postId)
@@ -59,7 +51,7 @@ describe("Post Repository", () => {
   });
 
   test("Should return null if Post is deleted successfully", async () => {
-    const sut = new PostMongoRepository();
+    const sut = new PostMongoRepository(db);
     const postDocument = await sut.insert(makePost());
     const postId: string = postDocument._id!.toString()
     const result = await sut.deleteOneById(postId)
@@ -67,7 +59,7 @@ describe("Post Repository", () => {
   });
 
   test("Should return updated Post when correct data is provided", async () => {
-    const sut = new PostMongoRepository();
+    const sut = new PostMongoRepository(db);
     const postDocument = await sut.insert(makePost());
     const postId: string = postDocument._id!.toString()
     const result = await sut.updateOneById(postId, {

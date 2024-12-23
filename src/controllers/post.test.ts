@@ -1,10 +1,10 @@
 import { PostController } from "./post";
-import { PostRepository } from "../protocols/repository";
+import { Repository } from "../protocols/repository";
 import { makePostRequest, makePostRepositoryStub } from "../helpers";
 
 type SutTypes = {
   sut: PostController;
-  postRepositoryStub: PostRepository;
+  postRepositoryStub: Repository;
 };
 
 const makeSut = (): SutTypes => {
