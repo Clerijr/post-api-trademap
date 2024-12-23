@@ -10,11 +10,12 @@ Desafio Backend para a empresa [TradeMap](https://www.linkedin.com/company/trade
 - [] Listar os Posts de maneira paginada, permitindo filtro por data.
 - [x] Obter informações de um Post por ID.
 
-A entidade `Post`, deve ter os seguintes campos:
+### Ferramentas Utilizadas
 
-- id -> Identificador do Post.
-- title -> Título do Post.
-- description -> Descrição do Post.
-- body -> Corpo do Post.
-- created_at -> Data de criação do Post.
-- updated_at -> Data de atualização do Post."
+- Node
+- Typescript
+- Express
+- MongoDb
+- Jest
+- Rimraf
+
