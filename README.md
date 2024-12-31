@@ -8,6 +8,8 @@ Desafio Backend para a empresa [TradeMap](https://www.linkedin.com/company/trade
 - [x] Editar um Post
 - [x] Deletar um Post
 - [] Listar os Posts de maneira paginada, permitindo filtro por data.
+    - [] Paginação
+    - [] Filtro por Data
 - [x] Obter informações de um Post por ID.
 
 ### Ferramentas Utilizadas
