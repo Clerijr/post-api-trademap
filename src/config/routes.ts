@@ -5,7 +5,7 @@ export const initRoutes = (controller: Controller): Router => {
   const router: Router = Router();
 
   router.get("/post", async (req: Request, res: Response): Promise<void> => {
-    const response = await controller.getAll();
+    const response = await controller.getAll(req);
     res.status(response.statusCode).json(response.body);
   });
 

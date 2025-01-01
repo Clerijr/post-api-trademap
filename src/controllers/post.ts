@@ -9,6 +9,7 @@ import { HttpRequest, HttpResponse } from "../types/http";
 import { Controller, Repository } from "../protocols";
 import { MissingParamError } from "./errors/validation";
 import { PostNotFoundError, ServerError } from "./errors/server";
+import { Request } from "express";
 
 export class PostController implements Controller {
   constructor(private readonly postRepository: Repository) {}
@@ -27,9 +28,29 @@ export class PostController implements Controller {
     }
   }
 
-  async getAll(): Promise<HttpResponse> {
-    const payload = await this.postRepository.getAll();
-    return ok(payload);
+  async getAll(req: Request): Promise<HttpResponse> {
+    try {
+      let payload;
+      const page = parseInt(req.query.page as string) || 1;
+      const size = parseInt(req.query.size as string) || 10;
+      const initial_date = req.query.initial_date as string;
+      const final_date = req.query.final_date as string;
+      
+      if (initial_date && final_date) {
+        payload = await this.postRepository.getAll(
+          size,
+          page,
+          initial_date,
+          final_date
+        );
+      } else {
+        payload = await this.postRepository.getAll(size, page);
+      }
+
+      return ok(payload);
+    } catch (error: any) {
+      throw new ServerError(error);
+    }
   }
 
   async get(req: HttpRequest): Promise<HttpResponse> {

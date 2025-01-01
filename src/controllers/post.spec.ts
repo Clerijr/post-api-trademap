@@ -3,8 +3,8 @@ import { makePostRequest, makePostRepositoryStub, makeMongoPostDoc } from "../he
 import { Controller, Repository } from "../protocols";
 import { MissingParamError } from "./errors/validation";
 import { badRequest, notFound } from "../helpers/httpResponses";
-import { ObjectId } from "mongodb";
 import { PostNotFoundError } from "./errors/server";
+import { Request } from "express";
 
 type SutTypes = {
   sut: Controller;
@@ -56,7 +56,8 @@ describe("Posts Create Controller", () => {
 describe("Posts Get Controller", () => {
   test("Should return 200 if success", async () => {
     const { sut } = makeSut();
-    const httpResponse = await sut.getAll();
+    const httpRequest= {} as Request;
+    const httpResponse = await sut.getAll(httpRequest);
     expect(httpResponse.statusCode).toEqual(200);
   });
 });

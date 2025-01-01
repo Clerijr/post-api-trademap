@@ -1,6 +1,7 @@
 import { PostController } from "./post";
 import { Repository } from "../protocols/repository";
 import { makePostRequest, makePostRepositoryStub } from "../helpers";
+import { Request } from "express";
 
 type SutTypes = {
   sut: PostController;
@@ -46,7 +47,8 @@ describe("Posts Read Controller", () => {
   test("Should call getAll repository method", async () => {
     const { sut, postRepositoryStub } = makeSut();
     const getAllSpy = jest.spyOn(postRepositoryStub, 'getAll')
-    await sut.getAll();
+    const httpRequest = {} as Request;
+    await sut.getAll(httpRequest);
     expect(getAllSpy).toHaveBeenCalled()
   });
 

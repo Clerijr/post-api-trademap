@@ -1,6 +1,6 @@
-import { MongoRepository, Repository } from "../../../protocols/repository";
+import { Repository } from "../../../protocols/repository";
 import { Post } from "../../../types/post";
-import { Collection, Db, ObjectId } from "mongodb";
+import { Collection, Document, Db, ObjectId } from "mongodb";
 
 export class PostMongoRepository implements Repository {
   private postCollection: Collection<Post>;
@@ -19,11 +19,36 @@ export class PostMongoRepository implements Repository {
     return result;
   }
 
-  async getAll(): Promise<Array<Post>> {
-    const payload: Array<Post> = await this.postCollection
-      .find<Post>({})
-      .toArray();
-    return payload;
+  async getAll(
+    size: number,
+    page: number,
+    initial_date?: string,
+    final_date?: string
+  ): Promise<Array<Post>> {
+    const query: any = {};
+    console.log("debug repo", initial_date, final_date);
+
+    if (initial_date || final_date) {
+      query.created_at = {};
+      console.log("debug chego na data");
+      if (initial_date)
+        query.created_at.$gte = new Date(initial_date).toISOString();
+      if (final_date)
+        query.created_at.$lte = new Date(final_date).toISOString();
+    }
+    const payload: Array<Document> = await this.postCollection.aggregate([
+      {
+        $match: query,
+      },
+      {
+        $skip: page > 0 ? (page - 1) * size : 0,
+      },
+      {
+        $limit: size,
+      },
+    ]).toArray();
+
+    return payload as Post[];
   }
 
   async getOneById(id: string): Promise<Post | null> {
