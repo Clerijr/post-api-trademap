@@ -5,6 +5,7 @@ import { MissingParamError } from "./errors/validation";
 import { badRequest, notFound } from "../helpers/httpResponses";
 import { PostNotFoundError } from "./errors/server";
 import { Request } from "express";
+import { HttpRequest } from "../types";
 
 type SutTypes = {
   sut: Controller;
@@ -56,7 +57,7 @@ describe("Posts Create Controller", () => {
 describe("Posts Get Controller", () => {
   test("Should return 200 if success", async () => {
     const { sut } = makeSut();
-    const httpRequest= {} as Request;
+    const httpRequest = { query: {} }; // it should work without query, but dont know why test fails here
     const httpResponse = await sut.getAll(httpRequest);
     expect(httpResponse.statusCode).toEqual(200);
   });

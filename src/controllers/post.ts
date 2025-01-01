@@ -28,7 +28,7 @@ export class PostController implements Controller {
     }
   }
 
-  async getAll(req: Request): Promise<HttpResponse> {
+  async getAll(req: HttpRequest): Promise<HttpResponse> {
     try {
       let payload;
       const page = parseInt(req.query.page as string) || 1;
