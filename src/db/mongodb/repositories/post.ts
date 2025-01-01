@@ -26,11 +26,9 @@ export class PostMongoRepository implements Repository {
     final_date?: string
   ): Promise<Array<Post>> {
     const query: any = {};
-    console.log("debug repo", initial_date, final_date);
 
     if (initial_date || final_date) {
       query.created_at = {};
-      console.log("debug chego na data");
       if (initial_date)
         query.created_at.$gte = new Date(initial_date).toISOString();
       if (final_date)
