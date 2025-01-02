@@ -8,6 +8,8 @@ services:
       - mongodb
     env_file:
       - .env
+    networks:
+      - postNetwork
 
   mongodb:
     image: mongo
@@ -17,6 +19,12 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - postNetwork
 
 volumes:
   mongo_data:
+
+networks:
+  postNetwork:
+    driver: bridge
