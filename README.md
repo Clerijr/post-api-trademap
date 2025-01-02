@@ -13,7 +13,6 @@ Desafio Backend para a empresa [TradeMap](https://www.linkedin.com/company/trade
 - [x] Obter informações de um Post por ID.
 
 TODO: 
-- Arrumar docker
 - Adicionar Swagger
 
 ### Ferramentas Utilizadas
@@ -24,6 +23,21 @@ TODO:
 - MongoDb
 - Jest
 - Rimraf
+- Docker
+
+### Como rodar
+
+1 - Tenha docker engine e docker compose instalados. Caso necessário siga a doc: https://docs.docker.com/
+
+2 - Clone o projeto na sua máquina e entre na pasta:
+```bash 
+git clone https://github.com/Clerijr/post-api-trademap.git && cd ./post-api-trademap
+```
+3 - Crie um arquivo .env com a variável MONGO_URL. Você pode utilizar o .env.example presente neste repositório, basta renomear para .env
+
+4 - Uma vez dentro da pasta do projeto rode o comando `docker compose up --build` e estará funcionando na localhost:8080/post
+
+- O projeto usa porta 8080 para API e 27017 para o MongoDB
 
 ### Endpoints
 - GET /post
