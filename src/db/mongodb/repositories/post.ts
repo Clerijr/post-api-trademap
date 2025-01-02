@@ -1,6 +1,6 @@
 import { Repository } from "../../../protocols/repository";
 import { Post } from "../../../types/post";
-import { Collection, Document, Db, ObjectId } from "mongodb";
+import { Collection, Document, Db, ObjectId, Filter } from "mongodb";
 
 export class PostMongoRepository implements Repository {
   private postCollection: Collection<Post>;
@@ -25,7 +25,7 @@ export class PostMongoRepository implements Repository {
     initial_date?: string,
     final_date?: string
   ): Promise<Array<Post>> {
-    const query: any = {};
+    const query: Filter<Post> = {};
 
     if (initial_date || final_date) {
       query.created_at = {};

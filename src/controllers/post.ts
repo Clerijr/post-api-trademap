@@ -35,17 +35,13 @@ export class PostController implements Controller {
       const size = parseInt(req.query.size as string) || 10;
       const initial_date = req.query.initial_date as string;
       const final_date = req.query.final_date as string;
-      
-      if (initial_date && final_date) {
-        payload = await this.postRepository.getAll(
-          size,
-          page,
-          initial_date,
-          final_date
-        );
-      } else {
-        payload = await this.postRepository.getAll(size, page);
-      }
+
+      payload = await this.postRepository.getAll(
+        size,
+        page,
+        initial_date,
+        final_date
+      );
 
       return ok(payload);
     } catch (error: any) {
