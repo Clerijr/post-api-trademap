@@ -9,7 +9,6 @@ const initServer = async () => {
   const db = await MongoHelper.connect(process.env.MONGO_URL);
   const postRepository = new PostMongoRepository(db);
   const postController = new PostController(postRepository);
-  const postController2 = new PostController(postRepository);
 
   initApp(postController);
 };
